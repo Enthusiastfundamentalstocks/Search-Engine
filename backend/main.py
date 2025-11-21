@@ -1,53 +1,30 @@
 from fastapi import FastAPI
-from pydantic import BaseModel
-from typing import List
-import re
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
 
-# This is our in-memory database
-database = []
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
-# Schema for input data
-class Company(BaseModel):
-    name: str
-    description: str
-    sector: str
-    funding_stage: str
-    location: str
-    keywords: List[str] = []
-
+COMPANIES = [
+    {"name": "Tata Consultancy Services", "sector": "IT", "country": "India"},
+    {"name": "Reliance Industries", "sector": "Energy", "country": "India"},
+    {"name": "Infosys", "sector": "IT", "country": "India"},
+    {"name": "HDFC Bank", "sector": "Banking", "country": "India"},
+    {"name": "Apple Inc", "sector": "Technology", "country": "USA"},
+    {"name": "Amazon", "sector": "E-Commerce", "country": "USA"},
+]
 
 @app.get("/")
 def home():
-    return {"message": "Search Engine Backend Running"}
+    return {"message": "Backend working successfully"}
 
-
-# -------- 1) INDEX API -----------
-@app.post("/index")
-def index_company(company: Company):
-    database.append(company.dict())
-    return {"status": "success", "total_companies": len(database)}
-
-
-# -------- 2) SEARCH API ----------
 @app.get("/search")
-def search(q: str):
-    q = q.lower()
-    results = []
-
-    for company in database:
-        text = (
-            company["name"] + " " +
-            company["description"] + " " +
-            company["sector"] + " " +
-            company["funding_stage"] + " " +
-            company["location"] + " " +
-            " ".join(company["keywords"])
-        ).lower()
-
-        if re.search(q, text):
-            results.append(company)
-
-    return {"query": q, "results_found": len(results), "results": results}
-
+def search_companies(q: str = ""):
+    results = [c for c in COMPANIES if q.lower() in c["name"].lower()]
+    return {"results": results}
