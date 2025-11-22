@@ -1,0 +1,4 @@
+cd /workspaces/Search-Engine
+mkdir -p veldata-engine/backend/data
+touch veldata-engine/backend/main.py
+touch veldata-engine/backend/data/listed_companies_sample.csv
