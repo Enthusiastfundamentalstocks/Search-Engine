@@ -1,1 +1,7 @@
+name,ticker,exchange,sector,market_cap,roe,sales_cagr_3y,debt_to_equity,pe,promoter_holding
+HDFC Bank,HDFCBANK,NSE,Banking,1200000,18,15,0.9,22,26
+TCS,TCS,NSE,IT,1300000,30,12,0.1,28,72
+Reliance Industries,RELIANCE,NSE,Energy,1500000,15,10,0.7,24,50
+Infosys,INFY,NSE,IT,900000,28,11,0.2,25,74
+ICICI Bank,ICICIBANK,NSE,Banking,1100000,20,14,0.8,21,47
 
